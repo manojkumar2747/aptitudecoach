@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Aptitude Coach</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        header {
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            font-weight: 400;
+        }
+
+        .admin {
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .admin:hover {
+            color: #fff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+
+            margin: 60px auto;
+        }
+
+        .hero {
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 46px;
+
+            line-height: 1.1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            color: #777;
+        }
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            border-color: #555;
+
+            transform: translateY(-3px);
+        }
+
+        .icon {
+            font-size: 32px;
+
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 25px;
+
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #888;
+
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 12px 22px;
+
+            background: #fff;
+
+            color: #000;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        /* STREAK */
+
+        .streak {
+            margin-top: 20px;
+        }
+
+        .streak-number {
+            font-size: 45px;
+
+            font-weight: 800;
+
+            margin-top: 15px;
+        }
+
+        .days {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        .day {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #333;
+
+            border-radius: 50%;
+
+            color: #777;
+        }
+
+        .day.active {
+            background: #fff;
+
+            color: #000;
+
+            border-color: #fff;
+        }
+
+        /* COMPANY */
+
+        .company-section {
+            margin-top: 65px;
+        }
+
+        .company-section h2 {
+            font-size: 26px;
+
+            margin-bottom: 8px;
+        }
+
+        .company-section > p {
+            color: #777;
+
+            margin-bottom: 25px;
+        }
+
+        .companies {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+        .company {
+            padding: 22px;
+
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            color: white;
+
+            transition: 0.2s;
+        }
+
+        .company:hover {
+            background: #fff;
+
+            color: #000;
+
+            transform: translateY(-3px);
+        }
+
+        .company p {
+            margin-top: 8px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .company:hover p {
+            color: #444;
+        }
+
+        @media(max-width: 750px) {
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .companies {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+        }
+
+        @media(max-width: 450px) {
+
+            .companies {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Aptitude<span>Coach</span>
+    </div>
+
+    <a
+        href="/admin/login"
+        class="admin"
+    >
+        Admin
+    </a>
+
+</header>
+
+
+<div class="container">
+
+
+    <section class="hero">
+
+        <h1>
+            Build your aptitude.<br>
+            Crack your next interview.
+        </h1>
+
+        <p>
+            Learn concepts, practice questions and test yourself.
+        </p>
+
+    </section>
+
+
+    <!-- MAIN OPTIONS -->
+
+    <div class="main-grid">
+
+
+        <!-- QUIZ -->
+
+        <div class="card">
+
+            <div class="icon">
+                🎯
+            </div>
+
+            <h2>
+                Quiz
+            </h2>
+
+            <p>
+                Choose a category, topic and difficulty.
+                Test your knowledge and get your score
+                after completing the quiz.
+            </p>
+
+            <a
+                href="/quiz"
+                class="button"
+            >
+                Start Quiz →
+            </a>
+
+        </div>
+
+
+        <!-- LEARN TOPICS -->
+
+        <div class="card">
+
+            <div class="icon">
+                📚
+            </div>
+
+            <h2>
+                Learn Topics
+            </h2>
+
+            <p>
+                Learn aptitude topic by topic.
+                Each question includes the answer
+                and explanation.
+            </p>
+
+            <a
+                href="/learn"
+                class="button"
+            >
+                Learn Topics →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- STREAK -->
+
+    <div class="card streak">
+
+        <h2>
+            🔥 Practice Streak
+        </h2>
+
+        <div class="streak-number">
+            7
+        </div>
+
+        <p>
+            Days
+        </p>
+
+
+        <div class="days">
+
+            <div class="day active">M</div>
+
+            <div class="day active">T</div>
+
+            <div class="day active">W</div>
+
+            <div class="day active">T</div>
+
+            <div class="day active">F</div>
+
+            <div class="day active">S</div>
+
+            <div class="day">S</div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPANY QUESTIONS -->
+
+    <section class="company-section">
+
+        <h2>
+            Company-Based Questions
+        </h2>
+
+        <p>
+            Practice questions organized by company.
+        </p>
+
+
+        <div class="companies">
+
+
+            <a
+                href="/company/Google"
+                class="company"
+            >
+
+                <h3>
+                    Google
+                </h3>
+
+                <p>
+                    Aptitude Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/TCS"
+                class="company"
+            >
+
+                <h3>
+                    TCS
+                </h3>
+
+                <p>
+                    Placement Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Infosys"
+                class="company"
+            >
+
+                <h3>
+                    Infosys
+                </h3>
+
+                <p>
+                    Placement Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Wipro"
+                class="company"
+            >
+
+                <h3>
+                    Wipro
+                </h3>
+
+                <p>
+                    Placement Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Accenture"
+                class="company"
+            >
+
+                <h3>
+                    Accenture
+                </h3>
+
+                <p>
+                    Assessment Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Zoho"
+                class="company"
+            >
+
+                <h3>
+                    Zoho
+                </h3>
+
+                <p>
+                    Aptitude Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Cognizant"
+                class="company"
+            >
+
+                <h3>
+                    Cognizant
+                </h3>
+
+                <p>
+                    Placement Questions
+                </p>
+
+            </a>
+
+
+            <a
+                href="/company/Capgemini"
+                class="company"
+            >
+
+                <h3>
+                    Capgemini
+                </h3>
+
+                <p>
+                    Assessment Questions
+                </p>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+</body>
+
+</html>

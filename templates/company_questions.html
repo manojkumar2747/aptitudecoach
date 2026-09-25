@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ company }} Questions</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            background: #000;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 23px;
+
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-weight: normal;
+        }
+
+        header a {
+            color: #888;
+
+            text-decoration: none;
+        }
+
+        .container {
+            width: 92%;
+
+            max-width: 850px;
+
+            margin: 50px auto;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+
+            margin-bottom: 35px;
+        }
+
+        .question {
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            margin-bottom: 15px;
+        }
+
+        .number {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 20px;
+
+            line-height: 1.5;
+
+            margin-bottom: 20px;
+        }
+
+        .answer {
+            padding: 15px;
+
+            background: #111;
+
+            border-radius: 9px;
+
+            margin-bottom: 12px;
+        }
+
+        .explanation {
+            color: #aaa;
+
+            line-height: 1.6;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Aptitude<span>Coach</span>
+    </div>
+
+    <a href="/">
+        Home
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <h1>
+        {{ company }}
+    </h1>
+
+    <p class="subtitle">
+        Company-based aptitude questions.
+    </p>
+
+
+    {% for q in questions %}
+
+    <div class="question">
+
+        <div class="number">
+            Question {{ loop.index }}
+        </div>
+
+        <div class="question-text">
+            {{ q.question }}
+        </div>
+
+        <div class="answer">
+
+            <strong>
+                Answer:
+            </strong>
+
+            {{ q.answer }}
+
+        </div>
+
+        <div class="explanation">
+
+            <strong>
+                Explanation:
+            </strong>
+
+            {{ q.explanation }}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+
+</html>

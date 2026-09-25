@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Quiz Setup</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            background: #000;
+            color: #fff;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        header {
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #222;
+        }
+
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+
+        .logo span {
+            font-weight: normal;
+        }
+
+
+        header a {
+            color: #888;
+            text-decoration: none;
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+
+            margin: 60px auto;
+        }
+
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+
+        .box {
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 18px;
+
+            padding: 30px;
+        }
+
+
+        label {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #aaa;
+
+            font-size: 14px;
+        }
+
+
+        select {
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 25px;
+
+            background: #111;
+
+            color: #fff;
+
+            border: 1px solid #333;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        select:disabled {
+            color: #666;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+
+        button {
+            width: 100%;
+
+            padding: 14px;
+
+            background: #fff;
+
+            color: #000;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        button:hover {
+            background: #ddd;
+        }
+
+
+        button:disabled {
+            background: #444;
+            color: #777;
+            cursor: not-allowed;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        Aptitude<span>Coach</span>
+
+    </div>
+
+
+    <a href="/">
+
+        Home
+
+    </a>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <h1>
+
+        Start Quiz
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Customize your quiz before you begin.
+
+    </p>
+
+
+
+    <div class="box">
+
+
+        <!-- CATEGORY -->
+
+        <label>
+
+            Category
+
+        </label>
+
+
+        <select id="category">
+
+            <option value="All">
+
+                All Categories
+
+            </option>
+
+        </select>
+
+
+
+        <!-- TOPIC -->
+
+        <label>
+
+            Topic
+
+        </label>
+
+
+        <select id="topic">
+
+            <option value="All">
+
+                All Topics
+
+            </option>
+
+        </select>
+
+
+
+        <!-- DIFFICULTY -->
+
+        <label>
+
+            Difficulty
+
+        </label>
+
+
+        <select id="difficulty">
+
+            <option value="All">
+
+                All Levels
+
+            </option>
+
+        </select>
+
+
+
+        <!-- NUMBER OF QUESTIONS -->
+
+        <label>
+
+            Number of Questions
+
+        </label>
+
+
+        <select id="limit">
+
+            <option value="5">
+
+                5 Questions
+
+            </option>
+
+            <option value="10">
+
+                10 Questions
+
+            </option>
+
+            <option value="15">
+
+                15 Questions
+
+            </option>
+
+            <option value="20">
+
+                20 Questions
+
+            </option>
+
+        </select>
+
+
+
+        <!-- START QUIZ -->
+
+        <button
+            id="startButton"
+            onclick="startQuiz()"
+        >
+
+            Start Quiz →
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   LOAD CATEGORIES AND DIFFICULTIES
+   ========================================================= */
+
+async function loadFilters() {
+
+    try {
+
+        const response =
+            await fetch("/api/filters");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load filters"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const category =
+            document.getElementById(
+                "category"
+            );
+
+
+        const difficulty =
+            document.getElementById(
+                "difficulty"
+            );
+
+
+        /*
+         * Load categories
+         */
+
+        data.categories.forEach(
+            function(item) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value = item;
+
+                option.textContent = item;
+
+                category.appendChild(option);
+
+            }
+        );
+
+
+        /*
+         * Load difficulties
+         */
+
+        data.difficulties.forEach(
+            function(item) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+                option.value = item;
+
+                option.textContent = item;
+
+                difficulty.appendChild(option);
+
+            }
+        );
+
+
+        /*
+         * Topic dropdown initially contains
+         * only "All Topics".
+         *
+         * Topics will be loaded after
+         * selecting a category.
+         */
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error loading filters:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   LOAD TOPICS BASED ON CATEGORY
+   ========================================================= */
+
+async function loadTopics(category) {
+
+    const topic =
+        document.getElementById(
+            "topic"
+        );
+
+
+    /*
+     * Clear existing topics
+     */
+
+    topic.innerHTML = "";
+
+
+    /*
+     * If All Categories is selected
+     */
+
+    if (
+        !category ||
+        category === "All"
+    ) {
+
+        const allOption =
+            document.createElement(
+                "option"
+            );
+
+        allOption.value = "All";
+
+        allOption.textContent =
+            "All Topics";
+
+        topic.appendChild(
+            allOption
+        );
+
+        topic.disabled = false;
+
+        return;
+
+    }
+
+
+    /*
+     * Show loading message
+     */
+
+    const loadingOption =
+        document.createElement(
+            "option"
+        );
+
+    loadingOption.value = "";
+
+    loadingOption.textContent =
+        "Loading topics...";
+
+    topic.appendChild(
+        loadingOption
+    );
+
+    topic.disabled = true;
+
+
+    try {
+
+        /*
+         * Ask Flask for topics
+         * belonging to this category
+         */
+
+        const response =
+            await fetch(
+                "/api/topics?category=" +
+                encodeURIComponent(category)
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load topics"
+            );
+
+        }
+
+
+        const topics =
+            await response.json();
+
+
+        /*
+         * Clear loading option
+         */
+
+        topic.innerHTML = "";
+
+
+        /*
+         * Add All Topics
+         */
+
+        const allOption =
+            document.createElement(
+                "option"
+            );
+
+        allOption.value = "All";
+
+        allOption.textContent =
+            "All Topics";
+
+        topic.appendChild(
+            allOption
+        );
+
+
+        /*
+         * Add category-specific topics
+         */
+
+        if (
+            Array.isArray(topics) &&
+            topics.length > 0
+        ) {
+
+            topics.forEach(
+                function(item) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+                    option.value = item;
+
+                    option.textContent = item;
+
+                    topic.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+
+        else {
+
+            const noTopic =
+                document.createElement(
+                    "option"
+                );
+
+            noTopic.value = "";
+
+            noTopic.textContent =
+                "No topics available";
+
+            topic.appendChild(
+                noTopic
+            );
+
+        }
+
+
+        topic.disabled = false;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error loading topics:",
+            error
+        );
+
+
+        topic.innerHTML = "";
+
+
+        const errorOption =
+            document.createElement(
+                "option"
+            );
+
+        errorOption.value = "";
+
+        errorOption.textContent =
+            "Unable to load topics";
+
+        topic.appendChild(
+            errorOption
+        );
+
+
+        topic.disabled = false;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   CATEGORY CHANGE
+   ========================================================= */
+
+document
+    .getElementById("category")
+    .addEventListener(
+        "change",
+        function() {
+
+            loadTopics(
+                this.value
+            );
+
+        }
+    );
+
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz() {
+
+    const category =
+        document.getElementById(
+            "category"
+        ).value;
+
+
+    const topic =
+        document.getElementById(
+            "topic"
+        ).value;
+
+
+    const difficulty =
+        document.getElementById(
+            "difficulty"
+        ).value;
+
+
+    const limit =
+        document.getElementById(
+            "limit"
+        ).value;
+
+
+    /*
+     * Build quiz URL
+     */
+
+    const url =
+        `/quiz/start?category=${encodeURIComponent(category)}` +
+        `&topic=${encodeURIComponent(topic)}` +
+        `&difficulty=${encodeURIComponent(difficulty)}` +
+        `&limit=${encodeURIComponent(limit)}`;
+
+
+    /*
+     * Start quiz
+     */
+
+    window.location.href = url;
+
+}
+
+
+
+/* =========================================================
+   INITIAL LOAD
+   ========================================================= */
+
+loadFilters();
+
+
+</script>
+
+
+</body>
+
+</html>

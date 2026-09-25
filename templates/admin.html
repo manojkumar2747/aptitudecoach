@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            background: #000;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        header {
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 5%;
+
+            border-bottom: 1px solid #222;
+
+        }
+
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+        }
+
+
+        header a {
+
+            color: #888;
+
+            text-decoration: none;
+
+            margin-left: 15px;
+
+        }
+
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+        }
+
+
+        h1 {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .form {
+
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        .form h2 {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        input,
+        textarea,
+        select {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-bottom: 14px;
+
+            background: #111;
+
+            color: white;
+
+            border: 1px solid #333;
+
+            border-radius: 8px;
+
+            outline: none;
+
+        }
+
+
+        textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        .checks {
+
+            display: flex;
+
+            gap: 25px;
+
+            margin: 10px 0 20px;
+
+        }
+
+
+        .checks label {
+
+            color: #aaa;
+
+        }
+
+
+        .checks input {
+
+            width: auto;
+
+            margin-right: 7px;
+
+        }
+
+
+        button {
+
+            padding: 13px 22px;
+
+            background: white;
+
+            color: black;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .table-container {
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background: #0b0b0b;
+
+        }
+
+
+        th,
+        td {
+
+            padding: 14px;
+
+            border-bottom: 1px solid #222;
+
+            text-align: left;
+
+            white-space: nowrap;
+
+        }
+
+
+        th {
+
+            color: #777;
+
+        }
+
+
+        .delete {
+
+            background: #222;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 8px 12px;
+
+            border-radius: 6px;
+
+        }
+
+
+        /* =========================================
+           DANGER ZONE
+           ========================================= */
+
+        .danger-zone {
+
+            margin-top: 40px;
+
+            margin-bottom: 40px;
+
+            padding: 25px;
+
+            background: #0b0b0b;
+
+            border: 1px solid #5c2020;
+
+            border-radius: 18px;
+
+        }
+
+
+        .danger-zone h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            color: #ff4d4d;
+
+        }
+
+
+        .danger-zone p {
+
+            color: #888;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .delete-all-btn {
+
+            background: #dc2626;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .delete-all-btn:hover {
+
+            background: #b91c1c;
+
+        }
+
+
+        .delete-all-btn:active {
+
+            transform: scale(0.98);
+
+        }
+
+
+        @media(max-width:600px) {
+
+            .checks {
+
+                flex-direction: column;
+
+                gap: 10px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+
+        AptitudeCoach Admin
+
+    </div>
+
+
+    <div>
+
+        <a href="/">
+
+            Home
+
+        </a>
+
+
+        <a href="/admin/logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <h1>
+
+        Question Management
+
+    </h1>
+
+
+    <!-- =========================================
+         ADD QUESTION
+         ========================================= -->
+
+    <div class="form">
+
+        <h2>
+
+            Add Question
+
+        </h2>
+
+
+        <form
+            method="POST"
+            action="/admin/add"
+        >
+
+
+            <input
+                type="text"
+                name="question"
+                placeholder="Question"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="option_a"
+                placeholder="Option A"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="option_b"
+                placeholder="Option B"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="option_c"
+                placeholder="Option C"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="option_d"
+                placeholder="Option D"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="answer"
+                placeholder="Correct Answer"
+                required
+            >
+
+
+            <textarea
+                name="explanation"
+                placeholder="Explanation"
+                required
+            ></textarea>
+
+
+            <input
+                type="text"
+                name="category"
+                placeholder="Category - Quantitative Aptitude"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="topic"
+                placeholder="Topic - Percentages"
+                required
+            >
+
+
+            <select
+                name="difficulty"
+                required
+            >
+
+                <option value="">
+
+                    Select Difficulty
+
+                </option>
+
+
+                <option value="Easy">
+
+                    Easy
+
+                </option>
+
+
+                <option value="Medium">
+
+                    Medium
+
+                </option>
+
+
+                <option value="Hard">
+
+                    Hard
+
+                </option>
+
+            </select>
+
+
+            <input
+                type="text"
+                name="company"
+                placeholder="Company - Google / TCS / Infosys / None"
+                value="General"
+                required
+            >
+
+
+            <div class="checks">
+
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        name="show_in_quiz"
+                        checked
+                    >
+
+                    Show in Quiz
+
+                </label>
+
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        name="show_in_learn"
+                        checked
+                    >
+
+                    Show in Learn Topics
+
+                </label>
+
+
+            </div>
+
+
+            <button type="submit">
+
+                + Add Question
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================================
+         EXISTING QUESTIONS
+         ========================================= -->
+
+    <h2>
+
+        Existing Questions
+
+    </h2>
+
+
+    <br>
+
+
+    <div class="table-container">
+
+
+        <table>
+
+
+            <thead>
+
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Question</th>
+
+                    <th>Topic</th>
+
+                    <th>Category</th>
+
+                    <th>Level</th>
+
+                    <th>Company</th>
+
+                    <th>Quiz</th>
+
+                    <th>Learn</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+
+            </thead>
+
+
+
+            <tbody>
+
+
+                {% for q in questions %}
+
+
+                <tr>
+
+
+                    <td>
+
+                        {{ q.id }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ q.question }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ q.topic }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ q.category }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ q.difficulty }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ q.company }}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if q.show_in_quiz %}
+
+                            ✓
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if q.show_in_learn %}
+
+                            ✓
+
+                        {% else %}
+
+                            -
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+
+                        <a
+                            class="delete"
+                            href="/admin/delete/{{ q.id }}"
+                            onclick="return confirm('Delete this question?')"
+                        >
+
+                            Delete
+
+                        </a>
+
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         DELETE ALL QUESTIONS
+         ========================================= -->
+
+    <div class="danger-zone">
+
+        <h2>
+
+            ⚠️ Danger Zone
+
+        </h2>
+
+
+        <p>
+
+            Permanently delete all questions from the database.
+            This action cannot be undone.
+
+        </p>
+
+
+        <button
+            type="button"
+            class="delete-all-btn"
+            onclick="deleteAllQuestions()"
+        >
+
+            🗑️ Delete All Questions
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     DELETE ALL JAVASCRIPT
+     ========================================= -->
+
+<script>
+
+async function deleteAllQuestions() {
+
+
+    // First confirmation
+
+    const firstConfirm = confirm(
+
+        "⚠️ WARNING!\n\n" +
+
+        "This will permanently delete ALL questions " +
+        "from the database.\n\n" +
+
+        "Are you sure you want to continue?"
+
+    );
+
+
+    if (!firstConfirm) {
+
+        return;
+
+    }
+
+
+
+    // Second confirmation
+
+    const secondConfirm = confirm(
+
+        "🚨 FINAL CONFIRMATION 🚨\n\n" +
+
+        "ALL QUESTIONS WILL BE DELETED.\n\n" +
+
+        "This action cannot be undone.\n\n" +
+
+        "Do you really want to delete everything?"
+
+    );
+
+
+    if (!secondConfirm) {
+
+        return;
+
+    }
+
+
+
+    try {
+
+
+        const response = await fetch(
+
+            "/admin/delete-all",
+
+            {
+
+                method: "POST"
+
+            }
+
+        );
+
+
+        const data = await response.json();
+
+
+
+        if (data.success) {
+
+
+            alert(
+
+                "✅ " + data.message
+
+            );
+
+
+            // Refresh admin page
+
+            location.reload();
+
+
+        } else {
+
+
+            alert(
+
+                "❌ Error: " + data.message
+
+            );
+
+        }
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(error);
+
+
+        alert(
+
+            "❌ Something went wrong while deleting questions."
+
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ topic }} - Learn</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-weight: normal;
+        }
+
+        header a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 850px;
+
+            margin: 50px auto;
+        }
+
+        .title {
+            margin-bottom: 35px;
+        }
+
+        .title h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .title p {
+            color: #777;
+        }
+
+        .question-card {
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 20px;
+        }
+
+        .number {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 22px;
+
+            line-height: 1.5;
+
+            margin-bottom: 25px;
+        }
+
+        .answer-box {
+            background: #111;
+
+            border-left: 3px solid white;
+
+            padding: 18px;
+
+            margin-bottom: 15px;
+
+            line-height: 1.6;
+        }
+
+        .explanation {
+            background: #111;
+
+            padding: 18px;
+
+            border-radius: 10px;
+
+            color: #bbb;
+
+            line-height: 1.7;
+        }
+
+        .answer-title,
+        .explanation-title {
+            color: white;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Aptitude<span>Coach</span>
+    </div>
+
+    <a href="/learn">
+        ← Topics
+    </a>
+
+</header>
+
+
+<div class="container">
+
+
+    <div class="title">
+
+        <h1>
+            {{ topic }}
+        </h1>
+
+        <p>
+            Learn through questions and explanations.
+        </p>
+
+    </div>
+
+
+    {% for q in questions %}
+
+    <div class="question-card">
+
+        <div class="number">
+            Question {{ loop.index }}
+        </div>
+
+
+        <div class="question">
+            {{ q.question }}
+        </div>
+
+
+        <div class="answer-box">
+
+            <div class="answer-title">
+                Answer
+            </div>
+
+            {{ q.answer }}
+
+        </div>
+
+
+        <div class="explanation">
+
+            <div class="explanation-title">
+                Explanation
+            </div>
+
+            {{ q.explanation }}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Learn Topics</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            font-weight: normal;
+        }
+
+        header a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+
+            margin: 55px auto;
+        }
+
+        h1 {
+            font-size: 40px;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+
+            margin-bottom: 35px;
+        }
+
+        .topics {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .topic {
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            color: white;
+
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .topic:hover {
+            background: white;
+
+            color: black;
+
+            transform: translateY(-3px);
+        }
+
+        .topic h2 {
+            margin-bottom: 10px;
+        }
+
+        .topic p {
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .topic:hover p {
+            color: #444;
+        }
+
+        .arrow {
+            display: block;
+
+            margin-top: 20px;
+
+            font-size: 20px;
+        }
+
+        @media(max-width:800px) {
+
+            .topics {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width:500px) {
+
+            .topics {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Aptitude<span>Coach</span>
+    </div>
+
+    <a href="/">
+        Home
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <h1>
+        Learn Topics
+    </h1>
+
+    <p class="subtitle">
+        Learn concepts through questions, answers and explanations.
+    </p>
+
+
+    <div class="topics">
+
+
+        {% for topic in topics %}
+
+        <a
+            class="topic"
+            href="/learn/{{ topic.topic }}"
+        >
+
+            <h2>
+                {{ topic.topic }}
+            </h2>
+
+            <p>
+                {{ topic.category }}
+            </p>
+
+            <p>
+                {{ topic.question_count }}
+                questions
+            </p>
+
+            <span class="arrow">
+                →
+            </span>
+
+        </a>
+
+        {% endfor %}
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
